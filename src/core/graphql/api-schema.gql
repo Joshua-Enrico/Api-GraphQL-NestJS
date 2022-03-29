@@ -21,19 +21,35 @@ type User {
   email: String
   createdAt: DateTime
   updatedAt: DateTime
+  token: String
+}
+
+type UserDeleteType {
+  deleted: Boolean
 }
 
 type Query {
   user: [User!]!
   findUser(id: String!): User!
+  login(input: LoginDto!): User!
+}
+
+input LoginDto {
+  email: String!
+  password: String!
 }
 
 type Mutation {
   createUser(input: CreateUserDto!): UserCreate!
+  deleteUser(input: DeleteUserDto!): UserDeleteType!
 }
 
 input CreateUserDto {
   name: String
   email: String!
   password: String!
+}
+
+input DeleteUserDto {
+  id: String
 }
