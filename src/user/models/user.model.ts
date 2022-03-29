@@ -37,4 +37,14 @@ export class User {
     
     @Field({ nullable: true })
     updatedAt?: Date;
+
+    @Field({ nullable: true })
+    token?: string;
+}
+
+
+@ObjectType()
+export class UserDeleteType {
+    @Field(() => Boolean, { nullable: true })
+    deleted: boolean;
 }
