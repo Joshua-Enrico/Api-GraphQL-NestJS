@@ -1,0 +1,29 @@
+# docker-compose.yml
+version: "3"
+services:
+    db:
+        container_name: "${APP_NAME}-mariadb"
+        image: mariadb/server:10.5
+        restart: always
+        # be sure to run `docker volume rm dev_dev_conf` when changing envs
+        environment:
+            MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
+            MARIADB_DATABASE: "${MARIADB_DATABASE}"
+            MARIADB_USER: "${MARIADB_USER}"
+            MARIADB_PASSWORD: "${MARIADB_PASSWORD}"
+        networks:
+            app_net:
+                ipv4_address: "192.168.1.10"
+        ports:
+            - "3306:3306"
+        volumes:
+            - db_data:/home/yoyo/TypesScript/nest_prisma/graph_api/src/core/prisma/tmp/mysql/data
+            - db_conf:/home/yoyo/TypesScript/nest_prisma/graph_api/src/core/prisma/etc/mysql
+networks:
+    app_net:
+        ipam:
+            config:
+                - subnet: 192.168.1.0/24
+volumes:
+    db_data:
+    db_conf:
